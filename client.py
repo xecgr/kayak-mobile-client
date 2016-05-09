@@ -28,8 +28,11 @@ departure_date = raw_input("Departure date (MM/DD/YY): ")
 
 payload = {
     "action" : "registermobile",
-    "uuid" : UUID,
-    "hash" : HASH,
+    "udid" : UUID,
+    "shash" : HASH,
+    #params has changed
+    #"uuid" : UUID,
+    #"hash" : HASH,
     "model" : "iPhone4,1",
     "appid" : "kayakfree",
     "os" : "8.1.1",
@@ -38,8 +41,9 @@ payload = {
     "appdist" : "adhoc",
     "prefix" : ""
 }
-r = requests.get("https://www.kayak.com/k/authajax/", params=payload)
-
+#set headers to simulate mobile request
+headers = {'User-Agent' : 'kayakandroidphone/19.0'}
+r = requests.get("https://www.kayak.com/k/authajax/", params=payload, headers=headers)
 for line in r.text.split("\n"):
     if "sid" not in line:
         continue
